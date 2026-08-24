@@ -216,3 +216,7 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Personal folders not meant to be pushed
+codici/
+plans/
