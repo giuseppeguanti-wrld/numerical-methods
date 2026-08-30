@@ -32,3 +32,23 @@ def newton_vett(f, df, x0, atol=1e-8, rtol=1e-8, nmax=100):
         all_err = np.hstack((all_err, err))
         n_it += 1
     return x0, f0, df0, n_it, all_err
+
+
+def newton_damped_vett(grad, hess, x0, alpha=1.0, atol=1e-8, rtol=1e-8, nmax=100):
+    g0 = np.array(grad(x0)).flatten()
+    H0 = np.array(hess(x0))
+    dx = nl.solve(H0, g0)
+    x1 = x0 - alpha*dx
+    err = nl.norm(x1 - x0) / (1 + rtol/atol*nl.norm(x0))
+    all_err = np.array([err])
+    n_it = 1
+    while err > atol and n_it < nmax:
+        x0 = x1
+        g0 = np.array(grad(x0)).flatten()
+        H0 = np.array(hess(x0))
+        dx = nl.solve(H0, g0)
+        x1 = x0 - alpha*dx
+        err = nl.norm(x1 - x0) / (1 + rtol/atol*nl.norm(x0))
+        all_err = np.hstack((all_err, err))
+        n_it += 1
+    return x0, g0, H0, n_it, all_err
