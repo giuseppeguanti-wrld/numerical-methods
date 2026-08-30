@@ -1,0 +1,9 @@
+numpy
+matplotlib
+scipy
+sympy
+
+# Per eseguire i notebook (Restart & Run All):
+jupyter
+ipykernel
+nbconvert
